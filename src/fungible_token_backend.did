@@ -1,0 +1,34 @@
+type UserId = text;
+
+type Balance = nat64;
+
+type TokenError = variant {
+  Unauthorized;
+  UserNotFound;
+  InsufficientBalance;
+  InvalidInput: text;
+  MintError: text;
+  TransferError: text;
+};
+
+type TokenMetadata = record {
+  name: text;
+  symbol: text;
+  total_supply: nat64;
+};
+
+type UserAccount = record {
+  id: UserId;
+  principal: principal;
+  balance: Balance;
+};
+
+service : {
+  login_or_register: () -> (UserAccount) query;
+  my_user_id: () -> (opt UserId) query;
+  balance_of: (UserId) -> (variant { ok: Balance; err: TokenError }) query;
+  transfer: (UserId, nat64) -> (variant { ok: null; err: TokenError });
+  mint: (UserId) -> (variant { ok: null; err: TokenError });
+  metadata: () -> (TokenMetadata) query;
+  list_accounts: () -> (opt vec record { UserId; Balance }) query;
+}

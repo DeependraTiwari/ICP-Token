@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "canisters": {
+    "fungible_token_backend": {
+      "type": "rust",
+      "main": "src/fungible_token_backend/src/main.rs",
+      "candid": "src/fungible_token_backend.did",
+      "build": "cargo build --target wasm32-unknown-unknown --release",
+      "wasm": "target/wasm32-unknown-unknown/release/fungible_token_backend.wasm"
+    },
+    "fungible_token_frontend": {
+      "type": "assets",
+      "source": "src_frontend/public"
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": "v1"
+    }
+  },
+  "output_env_file": ".env"
+}
